@@ -1,33 +1,42 @@
-import React, { Component } from 'react'
-import { Router } from '@reach/router'
+import React, { Component } from 'react';
+import wordData from '../src/data/word-data.json'
+import './App.css';
+import { formatJsonData } from '../src/utils/utils'
 import Nav from './components/Nav'
-import Home from './components/Home'
-import './App.css'
-import AntonymsStudy from './components/AntonymsStudy'
+import { Router } from '@reach/router'
 import SynonymsStudy from './components/SynonymsStudy'
-import AntonymsTest from './components/AntonymsTest'
 import SynonymsTest from './components/SynonymsTest'
-import SignIn from './components/SignIn'
+import AntonymsStudy from './components/AntonymsStudy'
+import AntonymsTest from './components/AntonymsTest'
+import Home from './components/Home'
 
-export default class App extends Component {
+
+class App extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      data: formatJsonData(wordData)
+    }
+  }
   render() {
     return (
       <div>
-        <Nav>
-
-        </Nav>
-        <Router>
-          <Home path='/'/>
-          <AntonymsStudy path='/antonyms_study'/>
-          <SynonymsStudy path='/synonyms_study'/>
-          <AntonymsTest path='/antonyms_test' />
-          <SynonymsTest path='/synonyms_test' />
-          <SignIn path='/sign_in' />
-          
-        </Router>
-
+        <Nav/>
         
+        <Router>
+          <Home path="/" data={this.state.data} />
+          <SynonymsStudy path="synonyms_study" data={this.state.data} />
+          <AntonymsStudy path="antonyms_study" data={this.state.data} />
+          <SynonymsTest path="synonyms_test" data={this.state.data} />
+          <AntonymsTest path="antonyms_test" data={this.state.data} />         
+        </Router>
       </div>
-    )
+        
+     
+    );
+
   }
+  
 }
+
+export default App;
